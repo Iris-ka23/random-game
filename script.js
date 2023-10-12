@@ -59,3 +59,18 @@ const winFunction = (letter) => {
     }
     updateLeaderboard();
   };
+  const drawFunction = () => {
+    disableButtons();
+    msgRef.innerHTML = "&#x1F60E; <br> It's a Draw";
+  
+    // Play the draw sound
+    const drawSound = document.getElementById("drawSound");
+    drawSound.play();
+  
+    // Update leaderboard with the result
+    leaderboardData.push("Draw");
+    if (leaderboardData.length > maxGamesToStore) {
+      leaderboardData.shift();
+    }
+    updateLeaderboard();
+  };
