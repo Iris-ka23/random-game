@@ -74,3 +74,11 @@ const winFunction = (letter) => {
     }
     updateLeaderboard();
   };
+  // Update and display the leaderboard
+const updateLeaderboard = () => {
+    localStorage.setItem("leaderboard", JSON.stringify(leaderboardData));
+    let leaderboardHTML = leaderboardData.map((result, index) => {
+      return `<tr><td>${index + 1}</td><td>${result}</td></tr>`;
+    });
+    leaderboardTable.innerHTML = leaderboardHTML.join("");
+  };
