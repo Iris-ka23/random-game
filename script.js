@@ -82,3 +82,13 @@ const updateLeaderboard = () => {
     });
     leaderboardTable.innerHTML = leaderboardHTML.join("");
   };
+  // New Game
+newgameBtn.addEventListener("click", () => {
+    count = 0;
+    enableButtons();
+  });
+  
+  restartBtn.addEventListener("click", () => {
+    count = 0;
+    enableButtons();
+  });
