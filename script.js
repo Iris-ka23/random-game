@@ -40,3 +40,22 @@ const enableButtons = () => {
   // Disable popup
   popupRef.classList.add("hide");
 };
+// This function is executed when a player wins
+const winFunction = (letter) => {
+    disableButtons();
+    let winner = letter == "X" ? "X" : "O";
+    let moves = count;
+    let result = winner + " Wins in " + moves + " moves";
+    msgRef.innerHTML = "&#127878; <br>" + result;
+  
+    // Play the appropriate sound
+    const winSound = document.getElementById("winSound");
+    winSound.play();
+  
+    // Update leaderboard with the result
+    leaderboardData.push(result);
+    if (leaderboardData.length > maxGamesToStore) {
+      leaderboardData.shift();
+    }
+    updateLeaderboard();
+  };
