@@ -111,3 +111,32 @@ const winChecker = () => {
       }
     }
   };
+  // Display X/O on click
+btnRef.forEach((element) => {
+    element.addEventListener("click", () => {
+      if (xTurn) {
+        xTurn = false;
+        // Display X
+        element.innerText = "X";
+        element.disabled = true;
+      } else {
+        xTurn = true;
+        // Display Y
+        element.innerText = "O";
+        element.disabled = true;
+      }
+      // Increment count on each click
+      count += 1;
+      if (count == 9) {
+        drawFunction();
+      }
+      // Check for win on every click
+      winChecker();
+    });
+  });
+  
+  // Enable Buttons and disable popup on page load
+  window.onload = () => {
+    enableButtons();
+    updateLeaderboard();
+  };
