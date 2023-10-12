@@ -42,101 +42,101 @@ const enableButtons = () => {
 };
 // This function is executed when a player wins
 const winFunction = (letter) => {
-    disableButtons();
-    let winner = letter == "X" ? "X" : "O";
-    let moves = count;
-    let result = winner + " Wins in " + moves + " moves";
-    msgRef.innerHTML = "&#127878; <br>" + result;
-  
-    // Play the appropriate sound
-    const winSound = document.getElementById("winSound");
-    winSound.play();
-  
-    // Update leaderboard with the result
-    leaderboardData.push(result);
-    if (leaderboardData.length > maxGamesToStore) {
-      leaderboardData.shift();
-    }
-    updateLeaderboard();
-  };
-  const drawFunction = () => {
-    disableButtons();
-    msgRef.innerHTML = "&#x1F60E; <br> It's a Draw";
-  
-    // Play the draw sound
-    const drawSound = document.getElementById("drawSound");
-    drawSound.play();
-  
-    // Update leaderboard with the result
-    leaderboardData.push("Draw");
-    if (leaderboardData.length > maxGamesToStore) {
-      leaderboardData.shift();
-    }
-    updateLeaderboard();
-  };
-  // Update and display the leaderboard
+  disableButtons();
+  let winner = letter == "X" ? "X" : "O";
+  let moves = count;
+  let result = winner + " Wins in " + moves + " moves";
+  msgRef.innerHTML = "&#127878; <br>" + result;
+
+  // Play the appropriate sound
+  const winSound = document.getElementById("winSound");
+  winSound.play();
+
+  // Update leaderboard with the result
+  leaderboardData.push(result);
+  if (leaderboardData.length > maxGamesToStore) {
+    leaderboardData.shift();
+  }
+  updateLeaderboard();
+};
+const drawFunction = () => {
+  disableButtons();
+  msgRef.innerHTML = "&#x1F60E; <br> It's a Draw";
+
+  // Play the draw sound
+  const drawSound = document.getElementById("drawSound");
+  drawSound.play();
+
+  // Update leaderboard with the result
+  leaderboardData.push("Draw");
+  if (leaderboardData.length > maxGamesToStore) {
+    leaderboardData.shift();
+  }
+  updateLeaderboard();
+};
+// Update and display the leaderboard
 const updateLeaderboard = () => {
-    localStorage.setItem("leaderboard", JSON.stringify(leaderboardData));
-    let leaderboardHTML = leaderboardData.map((result, index) => {
-      return `<tr><td>${index + 1}</td><td>${result}</td></tr>`;
-    });
-    leaderboardTable.innerHTML = leaderboardHTML.join("");
-  };
-  // New Game
+  localStorage.setItem("leaderboard", JSON.stringify(leaderboardData));
+  let leaderboardHTML = leaderboardData.map((result, index) => {
+    return `<tr><td>${index + 1}</td><td>${result}</td></tr>`;
+  });
+  leaderboardTable.innerHTML = leaderboardHTML.join("");
+};
+// New Game
 newgameBtn.addEventListener("click", () => {
-    count = 0;
-    enableButtons();
-  });
-  
-  restartBtn.addEventListener("click", () => {
-    count = 0;
-    enableButtons();
-  });
-  // Win Logic
+  count = 0;
+  enableButtons();
+});
+
+restartBtn.addEventListener("click", () => {
+  count = 0;
+  enableButtons();
+});
+// Win Logic
 const winChecker = () => {
-    // Loop through all win patterns
-    for (let i of winningPattern) {
-      let [element1, element2, element3] = [
-        btnRef[i[0]].innerText,
-        btnRef[i[1]].innerText,
-        btnRef[i[2]].innerText,
-      ];
-      // Check if elements are filled
-      // If 3 empty elements are same and would give win as would
-      if (element1 != "" && element2 != "" && element3 != "") {
-        if (element1 == element2 && element2 == element3) {
-          // If all 3 buttons have the same values, then pass the value to winFunction
-          winFunction(element1);
-        }
+  // Loop through all win patterns
+  for (let i of winningPattern) {
+    let [element1, element2, element3] = [
+      btnRef[i[0]].innerText,
+      btnRef[i[1]].innerText,
+      btnRef[i[2]].innerText,
+    ];
+    // Check if elements are filled
+    // If 3 empty elements are same and would give win as would
+    if (element1 != "" && element2 != "" && element3 != "") {
+      if (element1 == element2 && element2 == element3) {
+        // If all 3 buttons have the same values, then pass the value to winFunction
+        winFunction(element1);
       }
     }
-  };
-  // Display X/O on click
+  }
+};
+// Display X/O on click
 btnRef.forEach((element) => {
-    element.addEventListener("click", () => {
-      if (xTurn) {
-        xTurn = false;
-        // Display X
-        element.innerText = "X";
-        element.disabled = true;
-      } else {
-        xTurn = true;
-        // Display Y
-        element.innerText = "O";
-        element.disabled = true;
-      }
-      // Increment count on each click
-      count += 1;
-      if (count == 9) {
-        drawFunction();
-      }
-      // Check for win on every click
-      winChecker();
-    });
+  element.addEventListener("click", () => {
+    if (xTurn) {
+      xTurn = false;
+      // Display X
+      element.innerText = "X";
+      element.disabled = true;
+    } else {
+      xTurn = true;
+      // Display Y
+      element.innerText = "O";
+      element.disabled = true;
+    }
+    // Increment count on each click
+    count += 1;
+    if (count == 9) {
+      drawFunction();
+    }
+    // Check for win on every click
+    winChecker();
   });
-  
-  // Enable Buttons and disable popup on page load
-  window.onload = () => {
-    enableButtons();
-    updateLeaderboard();
-  };
+});
+
+// Enable Buttons and disable popup on page load
+window.onload = () => {
+  enableButtons();
+  updateLeaderboard();
+};
